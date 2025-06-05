@@ -11,6 +11,26 @@ import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
 
+
+import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.material3.*
+import androidx.compose.ui.graphics.Color
+
+private val LightColors = lightColorScheme(
+    primary = Color(0xFF4CAF50),
+    secondary = Color(0xFF8BC34A),
+    background = Color.White,
+    surface = Color.White,
+)
+
+private val DarkColors = darkColorScheme(
+    primary = Color(0xFF81C784),
+    secondary = Color(0xFFA5D6A7),
+    background = Color.Black,
+    surface = Color.DarkGray,
+)
+
+
 private val DarkColorScheme = darkColorScheme(
     primary = Purple80,
     secondary = PurpleGrey80,
@@ -33,6 +53,9 @@ private val LightColorScheme = lightColorScheme(
     */
 )
 
+
+
+
 @Composable
 fun PF1Theme(
     darkTheme: Boolean = isSystemInDarkTheme(),
@@ -53,6 +76,20 @@ fun PF1Theme(
     MaterialTheme(
         colorScheme = colorScheme,
         typography = Typography,
+        content = content
+    )
+}
+
+@Composable
+fun RecycleClassifierAppTheme(
+    darkTheme: Boolean = isSystemInDarkTheme(),
+    content: @Composable () -> Unit
+) {
+    val colors = if (darkTheme) DarkColors else LightColors
+
+    MaterialTheme(
+        colorScheme = colors,
+        typography = Typography(),
         content = content
     )
 }
