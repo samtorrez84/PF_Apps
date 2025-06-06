@@ -56,7 +56,7 @@ fun WelcomeScreen(navController: NavController) {
             )
             Spacer(modifier = Modifier.height(100.dp))
             Button(
-                onClick = { navController.navigate("main") },
+                onClick = { navController.navigate("home") },
                 colors = ButtonDefaults.buttonColors(containerColor = Color.Black),
                 shape = RoundedCornerShape(20.dp),
                 modifier = Modifier
