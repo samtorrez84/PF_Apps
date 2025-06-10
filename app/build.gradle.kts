@@ -63,5 +63,10 @@ dependencies {
     implementation("androidx.datastore:datastore-preferences:1.0.0")
 
 
+    // TensorFlow Lite
+    implementation(libs.tensorflow.lite)
+    implementation(libs.tensorflow.lite.support)
+    implementation(libs.tensorflow.lite.gpu)
+    implementation(libs.tensorflow.lite.task.vision)
 
 }

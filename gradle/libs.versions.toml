@@ -11,6 +11,10 @@ composeBom = "2025.06.00"
 navigation = "2.9.0"
 navigationRuntimeAndroid = "2.9.0"
 compose = "1.8.2"
+tensorflowLite = "2.14.0"
+tensorflowLiteGpu = "2.14.0"
+tensorflowLiteSupport = "0.4.4"
+tensorflowLiteTaskVision = "0.4.4"
 
 
 [libraries]
@@ -34,6 +38,10 @@ compose-material-icons = { module = "androidx.compose.material:material-icons-ex
 compose-ui = { module = "androidx.compose.ui:ui", version.ref = "compose" }
 compose-material = { module = "androidx.compose.material:material", version.ref = "compose" }
 compose-preview = { module = "androidx.compose.ui:ui-tooling-preview", version.ref = "compose" }
+tensorflow-lite = { module = "org.tensorflow:tensorflow-lite", version.ref = "tensorflowLite" }
+tensorflow-lite-gpu = { module = "org.tensorflow:tensorflow-lite-gpu", version.ref = "tensorflowLiteGpu" }
+tensorflow-lite-support = { module = "org.tensorflow:tensorflow-lite-support", version.ref = "tensorflowLiteSupport" }
+tensorflow-lite-task-vision = { module = "org.tensorflow:tensorflow-lite-task-vision", version.ref = "tensorflowLiteTaskVision" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
