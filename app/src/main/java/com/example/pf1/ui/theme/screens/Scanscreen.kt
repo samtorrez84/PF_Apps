@@ -1,7 +1,6 @@
 package com.example.pf1.ui.theme.screens
 
 import android.net.Uri
-import android.provider.MediaStore
 import android.util.Log
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -98,6 +97,34 @@ fun ScanScreen(navController: NavController) {
         }
     }
 
+    val galleryLauncher = rememberLauncherForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
+        if (uri != null) {
+            Log.d("ScanScreen", "Imagen seleccionada de la galería: $uri")
+            imageUri = uri
+            val inputStream = context.contentResolver.openInputStream(uri)
+            val bitmap = BitmapFactory.decodeStream(inputStream)
+            inputStream?.close()
+
+            androidBitmap?.recycle() // Liberar bitmap anterior si hay
+            androidBitmap = bitmap // Guardamos bitmap android
+            imageBitmap = bitmap.asImageBitmap()
+            classificationResults = null
+            isClassifying = true
+            Log.d("ScanScreen", "Comenzando clasificación de la imagen seleccionada")
+
+            coroutineScope.launch {
+                val results = withContext(Dispatchers.IO) {
+                    classifier.classify(bitmap)
+                }
+                classificationResults = results
+                isClassifying = false
+                Log.d("ScanScreen", "Clasificación completada: $results")
+            }
+        } else {
+            Log.d("ScanScreen", "Selección de imagen cancelada o fallida")
+        }
+    }
+
     DisposableEffect(Unit) {
         onDispose {
             androidBitmap?.recycle()
@@ -135,7 +162,7 @@ fun ScanScreen(navController: NavController) {
             Spacer(modifier = Modifier.height(10.dp))
 
             Text(
-                text = "Toma una foto de un objeto para clasificarlo y obtener información sobre cómo reciclarlo correctamente.",
+                text = "Toma una foto de un objeto o selecciona una imagen de tu galería para clasificarlo.",
                 fontSize = 14.sp,
                 color = Color.DarkGray,
                 textAlign = TextAlign.Center,
@@ -157,6 +184,19 @@ fun ScanScreen(navController: NavController) {
 
             Spacer(modifier = Modifier.height(20.dp))
 
+            Button(
+                onClick = { galleryLauncher.launch("image/*") },
+                shape = RoundedCornerShape(10.dp),
+                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF03A9F4)),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(50.dp)
+            ) {
+                Text("Seleccionar de Galería", color = Color.White, fontSize = 18.sp)
+            }
+
+            Spacer(modifier = Modifier.height(20.dp))
+
             if (imageBitmap != null || isClassifying) {
                 Card(
                     modifier = Modifier
@@ -169,7 +209,7 @@ fun ScanScreen(navController: NavController) {
                         if (imageBitmap != null) {
                             Image(
                                 bitmap = imageBitmap!!,
-                                contentDescription = "Imagen capturada",
+                                contentDescription = "Imagen",
                                 modifier = Modifier.fillMaxSize()
                             )
                         }
