@@ -3,4 +3,4 @@ Proyecto: Este proyecto prsenta el desarrollo de una aplicación móvil para cla
 Equipo:
 Ethan Abraham Sánchez Téllez,
 Samuel Alejandro Torrez Oropeza,
-Mariano Ugalde Días
+Mariano Ugalde Díaz
