@@ -59,6 +59,24 @@ fun Center1Screen(navController: NavController) {
 
         Spacer(modifier = Modifier.height(20.dp))
 
+        // Botón para ver en el mapa
+        Button(
+            onClick = {
+                navController.navigate("map") {
+                    popUpTo("centro1") { inclusive = true }
+                }
+            },
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(50.dp),
+            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF4CAF50)),
+            shape = RoundedCornerShape(16.dp)
+        ) {
+            Text("Ver en el mapa", color = Color.White, fontSize = 16.sp)
+        }
+
+        Spacer(modifier = Modifier.height(20.dp))
+
         // Botón Volver
         Button(
             onClick = {

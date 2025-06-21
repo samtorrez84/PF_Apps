@@ -36,9 +36,15 @@ import com.example.pf1.clasificador.ImageClassifier
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import android.Manifest
+import android.content.pm.PackageManager
+import androidx.core.content.ContextCompat
+import com.example.pf1.model.CenterData
+import com.google.android.gms.location.LocationServices
+import org.maplibre.android.geometry.LatLng
 
 @Composable
-fun ScanScreen(navController: NavController) {
+fun ScanScreen(navController: NavController, centers: List<CenterData> = emptyList()) {
     val context = LocalContext.current
     var imageUri by remember { mutableStateOf<Uri?>(null) }
     var imageBitmap by remember { mutableStateOf<ImageBitmap?>(null) }
@@ -125,6 +131,40 @@ fun ScanScreen(navController: NavController) {
         }
     }
 
+    val permissions = listOf(
+        Manifest.permission.ACCESS_FINE_LOCATION,
+        Manifest.permission.ACCESS_COARSE_LOCATION
+    )
+
+    val permissionLauncher = rememberLauncherForActivityResult(
+        ActivityResultContracts.RequestMultiplePermissions()
+    ) { permissions ->
+    }
+
+    val fusedLocationClient = remember { LocationServices.getFusedLocationProviderClient(context) }
+
+    var locationlatitude by remember { mutableStateOf("") }
+    var locationlongitude by remember { mutableStateOf("") }
+
+
+    fun getLocation() {
+        if (ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            fusedLocationClient.lastLocation.addOnSuccessListener { location ->
+                if (location != null) {
+                    locationlatitude = location.latitude.toString()
+                    locationlongitude = location.longitude.toString()
+                } else {
+                    locationlatitude = "No disponible"
+                    locationlongitude = "No disponible"
+                }
+            }
+        } else {
+            // Lanzar el pedido de permisos
+            permissionLauncher.launch(permissions.toTypedArray())
+        }
+    }
+
+
     DisposableEffect(Unit) {
         onDispose {
             androidBitmap?.recycle()
@@ -172,7 +212,9 @@ fun ScanScreen(navController: NavController) {
             Spacer(modifier = Modifier.height(20.dp))
 
             Button(
-                onClick = { cameraLauncher.launch(uri) },
+                onClick = {
+                    cameraLauncher.launch(uri)
+                    getLocation()},
                 shape = RoundedCornerShape(10.dp),
                 colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF4CAF50)),
                 modifier = Modifier
@@ -185,7 +227,9 @@ fun ScanScreen(navController: NavController) {
             Spacer(modifier = Modifier.height(20.dp))
 
             Button(
-                onClick = { galleryLauncher.launch("image/*") },
+                onClick = {
+                    galleryLauncher.launch("image/*")
+                    getLocation()},
                 shape = RoundedCornerShape(10.dp),
                 colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF03A9F4)),
                 modifier = Modifier
@@ -272,10 +316,35 @@ fun ScanScreen(navController: NavController) {
                                     fontSize = 16.sp,
                                     color = Color.DarkGray
                                 )
+                                Spacer(modifier = Modifier.height(8.dp))
+
+                                Button(
+                                    onClick = {
+
+                                        val markers = centers.map { center ->
+                                            LatLng(center.latitude, center.longitude) to center.name
+                                        }
+
+                                        // Convierte la lista de marcadores a un string
+                                        val markersString = markers.joinToString(separator = "|") {
+                                            "${it.first.latitude},${it.first.longitude},${it.second}"
+                                        }
+
+                                        // Navega a `MapScreen` con los argumentos
+                                        navController.navigate("map/$locationlatitude/$locationlongitude/$markersString")
+                                    },
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .height(50.dp)
+                                ) {
+                                    Text("Mostrar Centros de Acopio Cercanos", color = Color.White, fontSize = 18.sp)
+                                }
+
                             }
                         }
 
                         Spacer(modifier = Modifier.height(16.dp))
+
                     }
                 }
             } else {

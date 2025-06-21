@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.kotlin.compose)
 }
 
+
 android {
     namespace = "com.example.pf1"
     compileSdk = 35
@@ -70,4 +71,8 @@ dependencies {
     implementation(libs.tensorflow.lite.gpu)
     implementation(libs.tensorflow.lite.task.vision)
 
+    implementation(libs.play.services.location)
+    implementation(libs.maplibre)
+
+    implementation(libs.coil.compose)
 }

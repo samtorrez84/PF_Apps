@@ -27,16 +27,17 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.compose.currentBackStackEntryAsState
+import com.example.pf1.model.CenterData
 
 val backgroundWhite = Color(0xFFFFFFFF)
 val mainGreen = Color(0xFF6B8E23)
 val unselectedGray = Color(0xFF9E9E9E)
 
 @Composable
-fun HomeScreen(navController: NavController, defaultTab: String = "Basura") {
+fun HomeScreen(navController: NavController, defaultTab: String = "Basura", centers: List<CenterData> = emptyList()) {
     var selectedTab by rememberSaveable { mutableStateOf(defaultTab) }
-
     Scaffold(
         containerColor = Color.White,
         bottomBar = {
@@ -101,11 +102,9 @@ fun HomeScreen(navController: NavController, defaultTab: String = "Basura") {
                         Triple("Otros", "other", R.drawable.img_others)
                     )
                 } else {
-                    listOf(
-                        Triple("Centro 1", "center1", R.drawable.ub),
-                        Triple("Centro 2", "center2", R.drawable.ub),
-                        Triple("Centro 3", "center3", R.drawable.ub)
-                    )
+                    centers.map { center ->
+                        Triple(center.name, "center/${center.id}", R.drawable.ub)
+                    }
                 }
 
                 items(content) { (title, route, imageRes) ->
