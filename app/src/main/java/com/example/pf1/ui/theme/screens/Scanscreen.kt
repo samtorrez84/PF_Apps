@@ -337,7 +337,7 @@ fun ScanScreen(navController: NavController, centers: List<CenterData> = emptyLi
                                         .fillMaxWidth()
                                         .height(50.dp)
                                 ) {
-                                    Text("Mostrar Centros de Acopio Cercanos", color = Color.White, fontSize = 18.sp)
+                                    Text("Mostrar Centros de Acopio", color = Color.White, fontSize = 18.sp)
                                 }
 
                             }
