@@ -30,3 +30,13 @@ ReciclApp es una aplicación diseñada para fomentar el reciclaje. Permite a los
 - *SDK de Android*: Compile SDK 35, Target SDK 35, Min SDK 24.
 - *Kotlin*: JVM Target 11.
 - *Gradle*: Configurado en el proyecto.
+
+### Dependencias
+- *TensorFlow Lite*: Para el escaneo de materiales.
+- *MapLibre*: Para la funcionalidad de mapa interactivo.
+- *Accompanist Navigation Animation*: Para transiciones animadas entre pantallas.
+
+## Equipo:
+- Ethan Abraham Sánchez Téllez,
+- Samuel Alejandro Torrez Oropeza,
+- Mariano Ugalde Díaz
