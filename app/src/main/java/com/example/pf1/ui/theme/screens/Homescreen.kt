@@ -63,7 +63,7 @@ fun HomeScreen(navController: NavController, defaultTab: String = "Basura", cent
             Spacer(modifier = Modifier.height(12.dp))
 
             Text(
-                text = "Encuentra puntos de acopio de reciclaje",
+                text = "Recicla materiales y encuentra puntos de acopio de reciclaje",
                 fontSize = 14.sp,
                 color = Color(0xFF4E342E),
                 modifier = Modifier

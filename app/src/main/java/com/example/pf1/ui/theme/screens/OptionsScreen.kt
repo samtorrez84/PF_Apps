@@ -62,13 +62,6 @@ fun OptionsScreen(navController: NavController) {
         ) {
             Spacer(modifier = Modifier.height(20.dp))
 
-            Text(
-                text = "Configuración del perfil",
-                fontSize = 30.sp,
-                fontWeight = FontWeight.Bold,
-                color = Color(0xFF000000)
-            )
-
             Spacer(modifier = Modifier.height(24.dp))
 
             if (editando) {

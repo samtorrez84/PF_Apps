@@ -42,14 +42,14 @@ fun WelcomeScreen(navController: NavController) {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
-                text = "Welcome",
+                text = "Bienvenido",
                 fontSize = 36.sp,
                 color = Color.White,
                 fontWeight = FontWeight.Bold
             )
             Spacer(modifier = Modifier.height(8.dp))
             Text(
-                text = "Choose the best cathegory for\ncleaning the world",
+                text = "Elige la mejor categoría\npara limpiar el mundo",
                 fontSize = 16.sp,
                 color = Color.White,
                 textAlign = TextAlign.Center
@@ -63,7 +63,7 @@ fun WelcomeScreen(navController: NavController) {
                     .fillMaxWidth(0.4f)
                     .height(48.dp)
             ) {
-                Text("Start", color = Color.White)
+                Text("Comenzar", color = Color.White)
             }
         }
     }
